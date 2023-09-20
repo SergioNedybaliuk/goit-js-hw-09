@@ -8,6 +8,7 @@ const tDays = document.querySelector('span[data-days]');
 const tHours = document.querySelector('span[data-hours]');
 const tMinutes = document.querySelector('span[data-minutes]');
 const tSeconds = document.querySelector('span[data-seconds]');
+const btStop = document.querySelector('button[data-stop]');
 
 let countdownInterval; 
 btStart.setAttribute("disabled", true);
@@ -46,6 +47,8 @@ function startCountdown(ms) {
     clearInterval(countdownInterval);
   }
 
+  btStop.setAttribute("disabled", true);
+
   countdownInterval = setInterval(() => {
     const { days, hours, minutes, seconds } = convertMs(ms);
 
@@ -56,11 +59,19 @@ function startCountdown(ms) {
 
     if (ms <= 0) {
       clearInterval(countdownInterval);
-      alert("Countdown has finished!");
-    } else {
-      ms -= 1000; 
+      btStop.removeAttribute("disabled"); 
+      return alert("Countdown has finished!");
     }
   }, 1000);
+}
+
+function stopCountdown() {
+  clearInterval(countdownInterval);
+  
+  tDays.textContent = '00';
+  tHours.textContent = '00';
+  tMinutes.textContent = '00';
+  tSeconds.textContent = '00';
 }
 
 function convertMs(ms) {
@@ -80,18 +91,7 @@ function convertMs(ms) {
 function addLeadingZero(value) {
   return value < 10 ? `0${value}` : value.toString();
 }
-const btStop = document.querySelector('button[data-stop]');
 
 btStop.addEventListener('click', () => {
   stopCountdown();
 });
-
-
-function stopCountdown() {
-  clearInterval(countdownInterval);
-  
-  tDays.textContent = '00';
-  tHours.textContent = '00';
-  tMinutes.textContent = '00';
-  tSeconds.textContent = '00';
-}
