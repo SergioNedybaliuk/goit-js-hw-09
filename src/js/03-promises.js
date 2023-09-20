@@ -6,9 +6,9 @@ formRef.addEventListener('submit', onSubmitForm);
 
 function onSubmitForm(event) {
 event.preventDefault();
-let firstDelay = Number(document.querySelector('.first-delay').value);
-let delayStep = Number(document.querySelector('.delay-step').value); 
-let qAmount = Number(document.querySelector('.amount').value);
+const firstDelay = Number(document.querySelector('input[name="delay"]').value);
+const delayStep = Number(document.querySelector('input[name="step"]').value);
+const qAmount = Number(document.querySelector('input[name="amount"]').value);
 
 for (let i = 1; i <= qAmount; i += 1) {
     createPromise(i, firstDelay)
@@ -34,3 +34,7 @@ function createPromise(position, delay) {
           }, delay);
         });
 }
+
+// document.addEventListener('DOMContentLoaded', () => {
+
+// });
