@@ -8,9 +8,9 @@ const tDays = document.querySelector('span[data-days]');
 const tHours = document.querySelector('span[data-hours]');
 const tMinutes = document.querySelector('span[data-minutes]');
 const tSeconds = document.querySelector('span[data-seconds]');
+const btStop = document.querySelector('button[data-stop]');
 
-let countdownInterval; 
-btStart.setAttribute("disabled", true);
+let countdownInterval;
 
 const options = {
   enableTime: true,
@@ -36,9 +36,19 @@ btStart.addEventListener('click', () => {
   if (selectedDate > Date.now()) {
     const timeDiff = selectedDate - Date.now();
     startCountdown(timeDiff);
+
+    btStart.setAttribute("disabled", true);
+    btStop.removeAttribute("disabled"); 
   } else {
     Notify.failure('Please choose a date in the future');
   }
+});
+
+btStop.addEventListener('click', () => {
+  stopCountdown();
+
+  btStart.removeAttribute("disabled"); 
+  btStop.setAttribute("disabled", true);
 });
 
 function startCountdown(ms) {
@@ -61,6 +71,15 @@ function startCountdown(ms) {
       ms -= 1000; 
     }
   }, 1000);
+}
+
+function stopCountdown() {
+  clearInterval(countdownInterval);
+  
+  tDays.textContent = '00';
+  tHours.textContent = '00';
+  tMinutes.textContent = '00';
+  tSeconds.textContent = '00';
 }
 
 function convertMs(ms) {
