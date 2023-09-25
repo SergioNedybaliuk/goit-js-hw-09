@@ -52,10 +52,6 @@ btStop.addEventListener('click', () => {
 });
 
 function startCountdown(ms) {
-  if (countdownInterval) {
-    clearInterval(countdownInterval);
-  }
-
   countdownInterval = setInterval(() => {
     const { days, hours, minutes, seconds } = convertMs(ms);
 
